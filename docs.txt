@@ -1,0 +1,2 @@
+JWT packages
+npm i dotenv jsonwebtoken cookie-parser
