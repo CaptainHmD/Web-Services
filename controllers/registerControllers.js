@@ -31,7 +31,7 @@ const handleNewUser = async (req,res)=>{
    //TODO: encrypt the password and  create new user 
 
         //TODO: encrypt
-        const hashedPwd = await bcrypt.hash(pwd,10);
+        const hashedPwd = await bcrypt.hash(pwd,10); //! await
 
         //TODO: store the new user
         const newUser={"username":user,"password":hashedPwd}
