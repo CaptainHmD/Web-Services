@@ -7,6 +7,9 @@ const root = path.join(__dirname,'../')
 route.get('/',(req,res)=>{
     res.send(users)
 })
+route.get('/user', (req, res) => {
+    res.send(user);
+})
 route.get('/allusers',(req,res)=>{
     console.log('test');
 
