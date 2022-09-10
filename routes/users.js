@@ -8,8 +8,6 @@ route.get('/',(req,res)=>{
     res.send(users)
 })
 route.get('/allusers',(req,res)=>{
-    console.log('test');
-
     res.sendFile(path.join('public','views','index.html'), { root: root })
 })
 route.post('/allusers',(req,res)=>{
@@ -19,6 +17,8 @@ route.post('/allusers',(req,res)=>{
     // console.log(req.body);
     res.redirect('/users/allusers');
 })
-
+route.get('/test',(req,res)=>{
+    res.sendFile(path.join('views','test.html'), { root: root })
+})
 
 module.exports = route;

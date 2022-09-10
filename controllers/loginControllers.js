@@ -22,19 +22,22 @@ const  handleLogin = async(req,res)=>{
     if(!user || !pwd){return res.status(404).json({"message": "Username and Password required"})}
 
     // find the user that sent in 
+    console.log(user);
+    console.log(pwd);
     const foundUser = usersDB.users.find(person => person.username === user);
     if(!foundUser)return res.sendStatus(401); // 401 Unauthorized
     //evaluate password
     const math = await bcrypt.compare(pwd,foundUser.password) // compare for  encrypted password
     if (math) {
         //TODO: here  we will create JWTs 
+        res.send('login successful')
         const accessToken = jwt.sign(
             {'username':foundUser.username},
             process.env.ACCESS_TOKEN_SECRET,{expiresIn:'30s'}
         );
         const refreshToken = jwt.sign(
             {'username':foundUser.username},
-            process.env.refresh,{expiresIn:'1d'}
+            process.env.refresh,{expirkm,esIn:'1d'}
         );
 
         //! saving refresh token with current user
@@ -45,12 +48,13 @@ const  handleLogin = async(req,res)=>{
                 path.join(__dirname,'..','model','users.json'),
                 JSON.stringify(usersDB.users)
             )
+            
 
-
-        // res.json({"success":`user: ${user} is log in`})
+        res.cookie('jwt',refreshToken,{httpOnly:true,maxAge:24*60*60*1000})//24*60*60*1000 = 1day
         res.json({accessToken});
         
     }else{
+        
         res.sendStatus(401)// 401 Unauthorized
     }
 }

@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express();
 const path = require('path');
-const PORT = process.env.PORT || 3500;
+require('dotenv').config();
+const PORT = process.env.PORT ||4000;
 
 // !important 
 app.use(express.static('public'));
@@ -14,7 +15,8 @@ app.get('/', (req,res)=>{
 res.send('Test')
 })
 
-console.log(process.env.PORT);
+console.log("env",process.env.PORT);
+console.log(PORT);
 //! routes
 app.use('/users',require('./routes/users'));
 app.use('/register',require("./routes/register"));

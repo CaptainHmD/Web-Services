@@ -21,7 +21,7 @@ const handleNewUser = async (req,res)=>{
     if(!user || !pwd){return res.status(404).json({"message": "Username and Password required"})}
 
     // check duplicate
-    const duplicate = userDB.users.find(person =>{person.username ===user})
+    const duplicate = userDB.users.find(person =>{return person.username ===user})
     if(duplicate){
         return res.sendStatus(409);// conflict
     }
