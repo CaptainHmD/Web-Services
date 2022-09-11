@@ -7,6 +7,11 @@ const root = path.join(__dirname,'../')
 route.get('/',(req,res)=>{
     res.send(users)
 })
+
+route.get('/user', (req, res) => {
+    res.send("hello, world");
+})
+
 route.get('/allusers',(req,res)=>{
     res.sendFile(path.join('public','views','index.html'), { root: root })
 })
