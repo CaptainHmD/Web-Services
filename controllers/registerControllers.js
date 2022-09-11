@@ -22,6 +22,7 @@ const handleNewUser = async (req,res)=>{
 
     // check duplicate
     const duplicate = userDB.users.find(person =>{return person.username ===user})
+    console.log(req.headers);
     if(duplicate){
         return res.sendStatus(409);// conflict
     }

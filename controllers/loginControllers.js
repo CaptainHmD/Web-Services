@@ -30,33 +30,29 @@ const  handleLogin = async(req,res)=>{
     const math = await bcrypt.compare(pwd,foundUser.password) // compare for  encrypted password
     if (math) {
         //TODO: here  we will create JWTs 
-        res.send('login successful')
+        // res.send('login successful')
         const accessToken = jwt.sign(
             {'username':foundUser.username},
             process.env.ACCESS_TOKEN_SECRET,{expiresIn:'30s'}
         );
         const refreshToken = jwt.sign(
             {'username':foundUser.username},
-            process.env.refresh,{expirkm,esIn:'1d'}
+            process.env.REFRESH_TOKEN_SECRET,{expiresIn:'1d'}
         );
-
-        //! saving refresh token with current user
-        const otherUsers = usersDB.users.filter(person=> person.username !== foundUser.username);
-            const currentUser = {...foundUser,refreshToken};
-            usersDB.setUsers([...otherUsers,currentUser]);
-            await fsPromises.writeFile(
-                path.join(__dirname,'..','model','users.json'),
-                JSON.stringify(usersDB.users)
-            )
-            
-
-        res.cookie('jwt',refreshToken,{httpOnly:true,maxAge:24*60*60*1000})//24*60*60*1000 = 1day
-        res.json({accessToken});
-        
-    }else{
-        
-        res.sendStatus(401)// 401 Unauthorized
+        console.log('112');
+        //! Saving refreshToken with current user
+        const otherUsers = usersDB.users.filter(person => person.username !== foundUser.username);
+        const currentUser = { ...foundUser, refreshToken };
+        usersDB.setUsers([...otherUsers, currentUser]);
+        await fsPromises.writeFile(
+            path.join(__dirname, '..', 'model', 'users.json'),
+            JSON.stringify(usersDB.users)
+        );
+        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
+        res.json({ accessToken });
+    } else {
+        res.sendStatus(401);
     }
 }
 
-module.exports={handleLogin}
+module.exports = { handleLogin };
