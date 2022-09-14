@@ -1,18 +1,36 @@
 const express = require('express');
 const route = express.Router();
-const users=[]
+const userDB={
+    users: require('../model/users.json'),
+    setUsers: function (data){
+        this.users=data
+    }
+}
 const path = require('path')
 const root = path.join(__dirname,'../')
 //! JWT
-const verifyJWT =require('../middleware/verifyJWT');
+// const verifyJWT =require('../middleware/verifyJWT');
 
-route.get('/',verifyJWT,(req,res)=>{
+route.get('/',(req,res)=>{
     res.send(users)
 })
 
 
 route.get('/allusers',(req,res)=>{
     res.sendFile(path.join('public','views','index.html'), { root: root })
+
+})
+route.get('/usersData',(req,res)=>{
+    res.send(userDB.users)
+
+})
+route.get('/userData',(req,res)=>{
+console.log(req.headers);
+console.log(userDB.users.filter(user => user.username===req.user));
+    // res.json(userDB.users.filter(user => user.username===req.user)[0].username)
+    res.json(userDB.users.filter(user => user.username===req.user))
+
+    // res.send(userDB.users.filter(user => user.username===req.username))
 
 })
 route.post('/allusers',(req,res)=>{

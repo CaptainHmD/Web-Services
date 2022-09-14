@@ -7,7 +7,6 @@ const usersDB = {
 }
 
 const bcrypt = require('bcrypt');
-const { json } = require('express');
 
 //! JWT requirement
 const jwt = require ('jsonwebtoken')
@@ -33,7 +32,7 @@ const  handleLogin = async(req,res)=>{
         // res.send('login successful')
         const accessToken = jwt.sign(
             {'username':foundUser.username},
-            process.env.ACCESS_TOKEN_SECRET,{expiresIn:'30s'}
+            process.env.ACCESS_TOKEN_SECRET,{expiresIn:'30h'}
         );
         const refreshToken = jwt.sign(
             {'username':foundUser.username},
@@ -49,6 +48,9 @@ const  handleLogin = async(req,res)=>{
             JSON.stringify(usersDB.users)
         );
         res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
+        // console.log('START');
+        // console.log(sTest);
+        // console.log('END');
         res.json({ accessToken });
     } else {
         res.sendStatus(401);
