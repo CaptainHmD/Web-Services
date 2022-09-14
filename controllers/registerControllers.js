@@ -45,7 +45,7 @@ const handleNewUser = async (req,res)=>{
         path.join(__dirname,'..','model','users.json'),
         JSON.stringify(userDB.users))
 
-        res.status(201).json({'success':'new user created'})
+        res.status(201).json({'success':'new user created',user,pwd})
     } catch (error) {
         res.status(500).json({'message':error.message})
     }

@@ -15,9 +15,9 @@ require('dotenv').config();
 //! end
 
 const  handleRefreshToken = (req,res)=>{
-    console.log(req);
+    // console.log(req);
     const cookies = req.cookies;
-    console.log(req.cookies);
+    console.log(req);
     if(!cookies?.jwt){return res.sendStatus(401)}  // if there is a cookie then if it include jwt
 
     console.log('JWT\n\n',cookies.jwt);
