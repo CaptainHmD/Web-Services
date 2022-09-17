@@ -2,41 +2,41 @@
 const usersDB = {
     users: require('../model/users.json'),
     setUsers: function (data) {
-        this.users=data
+        this.users = data
     }
 }
 
 const bcrypt = require('bcrypt');
 
 //! JWT requirement
-const jwt = require ('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const fsPromises = require('fs').promises
 const path = require('path')
 
 //! end
 
-const  handleLogin = async(req,res)=>{
-    const {user,pwd}=req.body;
-    if(!user || !pwd){return res.status(404).json({"message": "Username and Password required"})}
+const handleLogin = async (req, res) => {
+    const { user, pwd } = req.body;
+    if (!user || !pwd) { return res.status(404).json({ "message": "Username and Password required" }) }
 
     // find the user that sent in 
     console.log(user);
     console.log(pwd);
     const foundUser = usersDB.users.find(person => person.username === user);
-    if(!foundUser)return res.sendStatus(401); // 401 Unauthorized
+    if (!foundUser) return res.sendStatus(401); // 401 Unauthorized
     //evaluate password
-    const math = await bcrypt.compare(pwd,foundUser.password) // compare for  encrypted password
+    const math = await bcrypt.compare(pwd, foundUser.password) // compare for  encrypted password
     if (math) {
         //TODO: here  we will create JWTs 
         // res.send('login successful')
         const accessToken = jwt.sign(
-            {'username':foundUser.username},
-            process.env.ACCESS_TOKEN_SECRET,{expiresIn:'30h'}
+            { 'username': foundUser.username },
+            process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30h' }
         );
         const refreshToken = jwt.sign(
-            {'username':foundUser.username},
-            process.env.REFRESH_TOKEN_SECRET,{expiresIn:'1d'}
+            { 'username': foundUser.username },
+            process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' }
         );
         console.log('112');
         //! Saving refreshToken with current user
