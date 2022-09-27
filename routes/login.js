@@ -7,7 +7,6 @@ const root = path.join(__dirname, '..')
 
 router.post('/', loginControllers.handleLogin);
 router.get('/', (req, res) => {
-    console.log(req);
     res.sendFile(path.join('public', 'views', 'index.html'), { root: root })
 
 })

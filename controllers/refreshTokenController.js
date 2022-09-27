@@ -17,10 +17,10 @@ require('dotenv').config();
 const handleRefreshToken = (req, res) => {
     // console.log(req);
     const cookies = req.cookies;
-    console.log(req);
+    // console.log(req);
     if (!cookies?.jwt) { return res.sendStatus(401) }  // if there is a cookie then if it include jwt
 
-    console.log('JWT\n\n', cookies.jwt);
+    // console.log('JWT\n\n', cookies.jwt);
     // find the user that sent in from refreshToken
     const refreshToken = cookies.jwt
 

@@ -21,7 +21,7 @@ route.get('/allusers', (req, res) => {
 
 })
 route.get('/usersData', (req, res) => {
-    res.send(userDB.users)
+    res.send(userDB.users.username)
 
 })
 route.get('/userData', (req, res) => {
