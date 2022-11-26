@@ -5,7 +5,7 @@ const verifyJTW = (req, res, next) => {
     // const authHeader = req.headers['authorization']; //! it will be updated (old)
     console.log('test');
     const authHeader = req.headers.authorization || req.headers.Authorization; //! (new) For a letter can be capital || Small
-    console.log('headarsssssssssssssss : ', authHeader);
+    console.log('headars : ', authHeader);
 
     if (!authHeader) return res.sendStatus(401); //! space is very important after Bearer
     // console.log(authHeader); // Bearer token

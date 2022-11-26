@@ -1,15 +1,22 @@
+require('dotenv').config();
 const express = require('express')
 const app = express();
 const path = require('path');
 
-require('dotenv').config();
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const verifyJWT = require('./middleware/verifyJWT')
 const cookieParser = require('cookie-parser');
 
-
+const mongoose = require('mongoose');
+const connectDB = require('./config/dbConn')
 const PORT = process.env.PORT || 4000;
+
+// connect to MongoDB
+
+connectDB();
+
+
 
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));
@@ -46,6 +53,9 @@ app.use(verifyJWT); // now every routers under this line need to authorized befo
 
 app.use('/employees', require('./routes/api/employees'));
 app.use('/users', require('./routes/users'));
-app.listen(PORT, () => {
-    console.log('Server is Listing to Port: ', PORT);
+mongoose.connection.once('open' , () =>{ // try to connect to DB before listing to the request
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => {
+        console.log('Server is Listing to Port: ', PORT);
+    })
 })

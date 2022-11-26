@@ -1,0 +1,9 @@
+npm i mongoose library for working with mongoDB
+
+import library in server file
+
+create connection configuration
+
+import connection configuration in server
+
+Try to connect and handle the listening request
