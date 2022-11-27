@@ -7,3 +7,8 @@ create connection configuration
 import connection configuration in server
 
 Try to connect and handle the listening request
+
+after connected to the db
+
+now create schema to DB in model
+attach the db schema to controllers
